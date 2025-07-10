@@ -49,7 +49,7 @@ const QuestionScreen: React.FC = () => {
         [
           {
             text: 'View Results',
-            onPress: () => navigation.navigate('Tasks' as never),
+            onPress: () => navigation.navigate('Result' as never),
           },
         ]
       );
@@ -60,7 +60,7 @@ const QuestionScreen: React.FC = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      navigation.navigate('Tasks' as never);
+      navigation.navigate('Result' as never);
     }
   };
 

@@ -36,6 +36,11 @@ export default function App() {
             options={{ title: 'Your Journey' }}
           />
           <Stack.Screen 
+            name="Result" 
+            component={require('./src/screens/ResultScreen').default} 
+            options={{ title: 'Your Recommendation' }}
+          />
+          <Stack.Screen 
             name="Tasks" 
             component={TaskListScreen} 
             options={{ title: 'Activities' }}
