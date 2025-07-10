@@ -28,7 +28,7 @@ export default function App() {
           <Stack.Screen 
             name="Home" 
             component={HomeScreen} 
-            options={{ title: 'Mindful Tasks' }}
+            options={{ title: 'Task Randomizer' }}
           />
           <Stack.Screen 
             name="Questions" 

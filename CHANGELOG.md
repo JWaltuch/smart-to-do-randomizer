@@ -225,10 +225,12 @@
 - **Property Tag Color Coding**: All activity properties now display with color coding - green for true, gentle orange for false
 - **Complete Property Visibility**: All properties are now shown (not just true ones) for better transparency
 
+### Changed
+- **App Name**: Changed from "Mindful Tasks" to "Task Randomizer" for clarity
+- **Home Screen**: Removed activity and guide count statistics for cleaner, more focused interface
+- Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users.
+
 ### Fixed
 - **Scoring Algorithm Bug**: Fixed issue where all tasks only received a score of 1 regardless of how many questions were answered correctly
 - **Score Accumulation**: Tasks now properly accumulate scores across multiple questions (e.g., answering "yes" to 3 questions now gives a score of 3 instead of 1)
-- **Context Integration**: Fixed scoring logic to use currentScores from context instead of task.score property
-
-### Changed
-- Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users. 
+- **Context Integration**: Fixed scoring logic to use currentScores from context instead of task.score property 

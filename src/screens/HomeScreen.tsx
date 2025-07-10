@@ -35,21 +35,10 @@ const HomeScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Mindful Tasks</Text>
+        <Text style={styles.title}>Task Randomizer</Text>
         <Text style={styles.subtitle}>
           Find your perfect activity with gentle guidance
         </Text>
-      </View>
-
-      <View style={styles.statsContainer}>
-        <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{tasks.length}</Text>
-          <Text style={styles.statLabel}>Activities</Text>
-        </View>
-        <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{questions.length}</Text>
-          <Text style={styles.statLabel}>Guides</Text>
-        </View>
       </View>
 
       <View style={styles.actionContainer}>
