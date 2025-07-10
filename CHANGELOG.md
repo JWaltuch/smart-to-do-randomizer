@@ -214,3 +214,8 @@
 - Local data persistence with AsyncStorage
 - Security vulnerabilities resolved
 - TypeScript support with React 19 compatibility 
+
+## [Unreleased]
+
+### Changed
+- Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users. 

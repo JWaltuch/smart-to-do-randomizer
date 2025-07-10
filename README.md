@@ -38,15 +38,22 @@ Based on your data modeling brainstorm, this app implements:
    npm install
    ```
 
-2. **Start the development server:**
+2. **Choose your development approach:**
+
+   **Option A - Standard Expo workflow:**
    ```bash
    npm start
    ```
-
-3. **Run on your preferred platform:**
+   Then choose your platform:
    - Press `i` for iOS Simulator
-   - Press `a` for Android Emulator
+   - Press `a` for Android Emulator  
    - Scan QR code with Expo Go app on your phone
+
+   **Option B - iOS Simulator (Recommended):**
+   ```bash
+   npm run ios-sim
+   ```
+   This automatically boots the iPhone 16 Pro simulator and starts Expo.
 
 ### First Time Setup
 
@@ -142,7 +149,8 @@ All data is stored locally using AsyncStorage:
 
 - `npm start` - Start Expo development server
 - `npm run android` - Run on Android
-- `npm run ios` - Run on iOS
+- `npm run ios` - Run on iOS (may have simulator issues)
+- `npm run ios-sim` - Boot iPhone 16 Pro simulator and start Expo (recommended for iOS)
 - `npm run web` - Run in web browser
 
 ### Key Technologies
@@ -152,6 +160,24 @@ All data is stored locally using AsyncStorage:
 - **TypeScript** - Type safety and better development experience
 - **React Navigation** - Screen navigation
 - **AsyncStorage** - Local data persistence
+
+## Troubleshooting
+
+### iOS Simulator Runtime Errors
+- Use `npm run ios-sim` instead of `npm run ios` to avoid runtime bundle errors
+- This script automatically boots the correct iPhone 16 Pro simulator
+
+### "Cannot find module" errors
+- Run `npm install` to ensure all dependencies are installed
+- Clear Metro cache: `npx expo start --clear`
+
+### App won't load on phone
+- Make sure your phone and computer are on the same WiFi network
+- Try using a tunnel connection: `npx expo start --tunnel`
+
+### TypeScript errors
+- The app should work despite TypeScript warnings
+- These are development-time checks and won't affect the running app
 
 ## Contributing
 
