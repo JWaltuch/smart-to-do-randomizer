@@ -17,28 +17,28 @@ export default function App() {
           initialRouteName="Home"
           screenOptions={{
             headerStyle: {
-              backgroundColor: '#6366f1',
+              backgroundColor: '#667eea',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#ffffff',
             headerTitleStyle: {
-              fontWeight: 'bold',
+              fontWeight: '300',
             },
           }}
         >
           <Stack.Screen 
             name="Home" 
             component={HomeScreen} 
-            options={{ title: 'Smart To-Do Randomizer' }}
+            options={{ title: 'Mindful Tasks' }}
           />
           <Stack.Screen 
             name="Questions" 
             component={QuestionScreen} 
-            options={{ title: 'Answer Questions' }}
+            options={{ title: 'Your Journey' }}
           />
           <Stack.Screen 
             name="Tasks" 
             component={TaskListScreen} 
-            options={{ title: 'Your Tasks' }}
+            options={{ title: 'Activities' }}
           />
         </Stack.Navigator>
         <StatusBar style="auto" />

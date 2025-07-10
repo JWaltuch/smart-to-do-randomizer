@@ -44,8 +44,8 @@ const QuestionScreen: React.FC = () => {
     } else {
       // Survey completed
       Alert.alert(
-        'Survey Complete!',
-        'Your task recommendations are ready.',
+        'Journey Complete',
+        'Your personalized recommendations are ready.',
         [
           {
             text: 'View Results',
@@ -66,12 +66,12 @@ const QuestionScreen: React.FC = () => {
 
   const handleReset = () => {
     Alert.alert(
-      'Reset Survey',
-      'Are you sure you want to start over?',
+      'Start Fresh',
+      'Are you sure you want to begin your journey again?',
       [
         { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Reset',
+          text: 'Begin Again',
           style: 'destructive',
           onPress: () => {
             resetScores();
@@ -87,7 +87,7 @@ const QuestionScreen: React.FC = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.noQuestionsText}>
-          No questions available. Please add some questions first.
+          No guides available. Please add some questions first.
         </Text>
       </View>
     );
@@ -105,7 +105,7 @@ const QuestionScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.progressContainer}>
         <Text style={styles.progressText}>
-          Question {currentQuestionIndex + 1} of {questions.length}
+          Step {currentQuestionIndex + 1} of {questions.length}
         </Text>
         <View style={styles.progressBar}>
           <View
@@ -120,7 +120,7 @@ const QuestionScreen: React.FC = () => {
       <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         <View style={styles.questionContainer}>
           <Text style={styles.questionText}>{currentQuestion.text}</Text>
-          <Text style={styles.propertyText}>Property: {currentQuestion.property}</Text>
+          <Text style={styles.propertyText}>Focus: {currentQuestion.property}</Text>
         </View>
 
         <View style={styles.answerContainer}>
@@ -145,7 +145,7 @@ const QuestionScreen: React.FC = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-            <Text style={styles.resetButtonText}>Reset Survey</Text>
+            <Text style={styles.resetButtonText}>Begin Again</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -156,7 +156,7 @@ const QuestionScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#f8f9fa',
   },
   progressContainer: {
     padding: 20,
@@ -166,19 +166,20 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#718096',
     textAlign: 'center',
     marginBottom: 8,
+    fontWeight: '500',
   },
   progressBar: {
-    height: 4,
+    height: 6,
     backgroundColor: '#e2e8f0',
-    borderRadius: 2,
+    borderRadius: 3,
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#6366f1',
+    backgroundColor: '#667eea',
   },
   content: {
     flex: 1,
@@ -189,87 +190,97 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     backgroundColor: '#ffffff',
-    padding: 24,
-    borderRadius: 12,
-    marginBottom: 24,
+    padding: 28,
+    borderRadius: 20,
+    marginBottom: 28,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: '#f7fafc',
   },
   questionText: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#1e293b',
+    fontSize: 22,
+    fontWeight: '300',
+    color: '#2d3748',
     textAlign: 'center',
-    lineHeight: 28,
+    lineHeight: 30,
+    letterSpacing: -0.3,
   },
   propertyText: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#a0aec0',
     textAlign: 'center',
-    marginTop: 8,
+    marginTop: 12,
+    fontWeight: '500',
   },
   answerContainer: {
     flexDirection: 'row',
     gap: 16,
-    marginBottom: 24,
+    marginBottom: 28,
   },
   answerButton: {
     flex: 1,
-    paddingVertical: 20,
-    borderRadius: 12,
+    paddingVertical: 22,
+    borderRadius: 16,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   yesButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#48bb78',
   },
   noButton: {
-    backgroundColor: '#ef4444',
+    backgroundColor: '#ed8936',
   },
   answerButtonText: {
     color: '#ffffff',
     fontSize: 18,
     fontWeight: '600',
+    letterSpacing: 0.5,
   },
   actionContainer: {
     gap: 12,
   },
   skipButton: {
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 24,
-    borderRadius: 8,
-    backgroundColor: '#f1f5f9',
+    borderRadius: 12,
+    backgroundColor: '#f7fafc',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
   skipButtonText: {
-    color: '#64748b',
+    color: '#718096',
     fontSize: 16,
     fontWeight: '500',
   },
   resetButton: {
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 24,
-    borderRadius: 8,
-    backgroundColor: '#fef2f2',
+    borderRadius: 12,
+    backgroundColor: '#fed7d7',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#feb2b2',
   },
   resetButtonText: {
-    color: '#dc2626',
+    color: '#c53030',
     fontSize: 16,
     fontWeight: '500',
   },
   noQuestionsText: {
     fontSize: 16,
-    color: '#64748b',
+    color: '#718096',
     textAlign: 'center',
     padding: 40,
+    lineHeight: 24,
   },
 });
 

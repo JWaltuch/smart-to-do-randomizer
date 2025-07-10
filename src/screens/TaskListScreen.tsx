@@ -8,6 +8,7 @@ import {
   TextInput,
   Alert,
   Modal,
+  Switch,
 } from 'react-native';
 import { useTaskContext } from '../context/TaskContext';
 
@@ -15,11 +16,18 @@ const TaskListScreen: React.FC = () => {
   const { tasks, addTask, updateTask, deleteTask, currentScores } = useTaskContext();
   const [showAddModal, setShowAddModal] = useState(false);
   const [newTaskName, setNewTaskName] = useState('');
-  const [newTaskProperties, setNewTaskProperties] = useState<Record<string, boolean>>({});
+  const [newTaskProperties, setNewTaskProperties] = useState<Record<string, boolean>>({
+    indoor: false,
+    physical: false,
+    quick: false,
+    creative: false,
+    social: false,
+    learning: false,
+  });
 
   const handleAddTask = () => {
     if (!newTaskName.trim()) {
-      Alert.alert('Error', 'Please enter a task name');
+      Alert.alert('Error', 'Please enter an activity name');
       return;
     }
 
@@ -32,18 +40,25 @@ const TaskListScreen: React.FC = () => {
 
     addTask(newTask);
     setNewTaskName('');
-    setNewTaskProperties({});
+    setNewTaskProperties({
+      indoor: false,
+      physical: false,
+      quick: false,
+      creative: false,
+      social: false,
+      learning: false,
+    });
     setShowAddModal(false);
   };
 
   const handleDeleteTask = (taskId: string) => {
     Alert.alert(
-      'Delete Task',
-      'Are you sure you want to delete this task?',
+      'Remove Activity',
+      'Are you sure you want to remove this activity?',
       [
         { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Delete',
+          text: 'Remove',
           style: 'destructive',
           onPress: () => deleteTask(taskId),
         },
@@ -61,14 +76,21 @@ const TaskListScreen: React.FC = () => {
     return scoreB - scoreA;
   });
 
+  const toggleProperty = (property: string) => {
+    setNewTaskProperties(prev => ({
+      ...prev,
+      [property]: !prev[property],
+    }));
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.taskList}>
         {sortedTasks.length === 0 ? (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyStateText}>No tasks yet</Text>
+            <Text style={styles.emptyStateText}>No activities yet</Text>
             <Text style={styles.emptyStateSubtext}>
-              Add some tasks to get started with your smart to-do list
+              Add some activities to get started with your mindful journey
             </Text>
           </View>
         ) : (
@@ -92,13 +114,13 @@ const TaskListScreen: React.FC = () => {
 
                 {score > 0 && (
                   <View style={styles.scoreContainer}>
-                    <Text style={styles.scoreText}>Score: {score}</Text>
+                    <Text style={styles.scoreText}>Match: {score}</Text>
                   </View>
                 )}
 
                 {properties.length > 0 && (
                   <View style={styles.propertiesContainer}>
-                    <Text style={styles.propertiesLabel}>Properties:</Text>
+                    <Text style={styles.propertiesLabel}>Traits:</Text>
                     <View style={styles.propertyTags}>
                       {properties.map(property => (
                         <View key={property} style={styles.propertyTag}>
@@ -118,7 +140,7 @@ const TaskListScreen: React.FC = () => {
         style={styles.addButton}
         onPress={() => setShowAddModal(true)}
       >
-        <Text style={styles.addButtonText}>+ Add Task</Text>
+        <Text style={styles.addButtonText}>+ Add Activity</Text>
       </TouchableOpacity>
 
       <Modal
@@ -129,15 +151,30 @@ const TaskListScreen: React.FC = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Add New Task</Text>
+            <Text style={styles.modalTitle}>Add New Activity</Text>
             
             <TextInput
               style={styles.input}
-              placeholder="Task name"
+              placeholder="Activity name"
               value={newTaskName}
               onChangeText={setNewTaskName}
               autoFocus
             />
+
+            <Text style={styles.propertiesTitle}>Activity Traits</Text>
+            <View style={styles.propertiesList}>
+              {Object.entries(newTaskProperties).map(([property, value]) => (
+                <View key={property} style={styles.propertyRow}>
+                  <Text style={styles.propertyLabel}>{property}</Text>
+                  <Switch
+                    value={value}
+                    onValueChange={() => toggleProperty(property)}
+                    trackColor={{ false: '#e2e8f0', true: '#667eea' }}
+                    thumbColor={value ? '#ffffff' : '#f4f3f4'}
+                  />
+                </View>
+              ))}
+            </View>
 
             <View style={styles.modalActions}>
               <TouchableOpacity
@@ -164,7 +201,7 @@ const TaskListScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#f8f9fa',
   },
   taskList: {
     flex: 1,
@@ -176,25 +213,28 @@ const styles = StyleSheet.create({
   },
   emptyStateText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#64748b',
+    fontWeight: '300',
+    color: '#718096',
     marginBottom: 8,
   },
   emptyStateSubtext: {
     fontSize: 14,
-    color: '#94a3b8',
+    color: '#a0aec0',
     textAlign: 'center',
+    lineHeight: 20,
   },
   taskCard: {
     backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 12,
+    padding: 20,
+    borderRadius: 16,
     marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#f7fafc',
   },
   taskHeader: {
     flexDirection: 'row',
@@ -204,20 +244,22 @@ const styles = StyleSheet.create({
   },
   taskName: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#1e293b',
+    fontWeight: '500',
+    color: '#2d3748',
     flex: 1,
   },
   deleteButton: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#fef2f2',
+    backgroundColor: '#fed7d7',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#feb2b2',
   },
   deleteButtonText: {
-    color: '#dc2626',
+    color: '#c53030',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -226,7 +268,7 @@ const styles = StyleSheet.create({
   },
   scoreText: {
     fontSize: 14,
-    color: '#6366f1',
+    color: '#667eea',
     fontWeight: '500',
   },
   propertiesContainer: {
@@ -234,8 +276,9 @@ const styles = StyleSheet.create({
   },
   propertiesLabel: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#a0aec0',
     marginBottom: 4,
+    fontWeight: '500',
   },
   propertyTags: {
     flexDirection: 'row',
@@ -243,31 +286,35 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   propertyTag: {
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#f7fafc',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
   propertyTagText: {
     fontSize: 12,
-    color: '#475569',
+    color: '#4a5568',
+    fontWeight: '500',
   },
   addButton: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#667eea',
     margin: 20,
-    paddingVertical: 16,
-    borderRadius: 12,
+    paddingVertical: 18,
+    borderRadius: 16,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   addButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
+    letterSpacing: 0.5,
   },
   modalOverlay: {
     flex: 1,
@@ -277,25 +324,54 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 20,
     padding: 24,
     width: '90%',
     maxWidth: 400,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    elevation: 8,
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1e293b',
+    fontWeight: '300',
+    color: '#2d3748',
     marginBottom: 20,
     textAlign: 'center',
   },
   input: {
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 8,
-    padding: 12,
+    borderRadius: 12,
+    padding: 16,
     fontSize: 16,
     marginBottom: 20,
+    backgroundColor: '#f7fafc',
+  },
+  propertiesTitle: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#2d3748',
+    marginBottom: 12,
+  },
+  propertiesList: {
+    marginBottom: 20,
+  },
+  propertyRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f7fafc',
+  },
+  propertyLabel: {
+    fontSize: 14,
+    color: '#4a5568',
+    fontWeight: '500',
+    textTransform: 'capitalize',
   },
   modalActions: {
     flexDirection: 'row',
@@ -303,20 +379,22 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 14,
+    borderRadius: 12,
     alignItems: 'center',
   },
   cancelButton: {
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#f7fafc',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
   cancelButtonText: {
-    color: '#64748b',
+    color: '#718096',
     fontSize: 16,
     fontWeight: '500',
   },
   saveButton: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#667eea',
   },
   saveButtonText: {
     color: '#ffffff',

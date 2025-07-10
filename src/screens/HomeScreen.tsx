@@ -35,20 +35,20 @@ const HomeScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Smart To-Do Randomizer</Text>
+        <Text style={styles.title}>Mindful Tasks</Text>
         <Text style={styles.subtitle}>
-          Answer questions to get personalized task recommendations
+          Find your perfect activity with gentle guidance
         </Text>
       </View>
 
       <View style={styles.statsContainer}>
         <View style={styles.statCard}>
           <Text style={styles.statNumber}>{tasks.length}</Text>
-          <Text style={styles.statLabel}>Tasks</Text>
+          <Text style={styles.statLabel}>Activities</Text>
         </View>
         <View style={styles.statCard}>
           <Text style={styles.statNumber}>{questions.length}</Text>
-          <Text style={styles.statLabel}>Questions</Text>
+          <Text style={styles.statLabel}>Guides</Text>
         </View>
       </View>
 
@@ -57,31 +57,31 @@ const HomeScreen: React.FC = () => {
           style={[styles.button, styles.primaryButton]}
           onPress={handleStartSurvey}
         >
-          <Text style={styles.buttonText}>Start Survey</Text>
+          <Text style={styles.buttonText}>Begin Journey</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.button, styles.secondaryButton]}
           onPress={handleViewTasks}
         >
-          <Text style={styles.buttonText}>View All Tasks</Text>
+          <Text style={styles.buttonText}>View Activities</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.button, styles.resetButton]}
           onPress={resetScores}
         >
-          <Text style={styles.buttonText}>Reset Scores</Text>
+          <Text style={styles.buttonText}>Start Fresh</Text>
         </TouchableOpacity>
       </View>
 
       {topTasks.length > 0 && (
         <View style={styles.topTasksContainer}>
-          <Text style={styles.sectionTitle}>Top Recommended Tasks</Text>
+          <Text style={styles.sectionTitle}>Recommended for You</Text>
           {topTasks.map((task, index) => (
             <View key={task.id} style={styles.taskItem}>
               <Text style={styles.taskName}>{task.name}</Text>
-              <Text style={styles.taskScore}>Score: {task.score}</Text>
+              <Text style={styles.taskScore}>Match: {task.score}</Text>
             </View>
           ))}
         </View>
@@ -93,111 +93,131 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#f8f9fa',
   },
   header: {
-    padding: 20,
+    padding: 24,
     alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1e293b',
+    fontSize: 32,
+    fontWeight: '300',
+    color: '#2d3748',
     textAlign: 'center',
+    letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 16,
-    color: '#64748b',
+    color: '#718096',
     textAlign: 'center',
     marginTop: 8,
+    lineHeight: 22,
   },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingHorizontal: 20,
-    marginBottom: 30,
+    marginTop: 24,
+    marginBottom: 32,
   },
   statCard: {
     backgroundColor: '#ffffff',
     padding: 20,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
     minWidth: 100,
+    borderWidth: 1,
+    borderColor: '#f7fafc',
   },
   statNumber: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#6366f1',
+    fontSize: 28,
+    fontWeight: '200',
+    color: '#667eea',
+    letterSpacing: -0.5,
   },
   statLabel: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#a0aec0',
     marginTop: 4,
+    fontWeight: '500',
   },
   actionContainer: {
     paddingHorizontal: 20,
-    gap: 12,
+    gap: 16,
   },
   button: {
-    paddingVertical: 16,
+    paddingVertical: 18,
     paddingHorizontal: 24,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   primaryButton: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#667eea',
   },
   secondaryButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#48bb78',
   },
   resetButton: {
-    backgroundColor: '#ef4444',
+    backgroundColor: '#ed8936',
   },
   buttonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
+    letterSpacing: 0.5,
   },
   topTasksContainer: {
     padding: 20,
-    marginTop: 20,
+    marginTop: 24,
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1e293b',
+    fontWeight: '300',
+    color: '#2d3748',
     marginBottom: 16,
+    textAlign: 'center',
   },
   taskItem: {
     backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 8,
+    padding: 20,
+    borderRadius: 16,
+    marginBottom: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#f7fafc',
   },
   taskName: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#1e293b',
+    fontWeight: '500',
+    color: '#2d3748',
+    marginBottom: 4,
   },
   taskScore: {
     fontSize: 14,
-    color: '#64748b',
-    marginTop: 4,
+    color: '#667eea',
+    fontWeight: '500',
   },
 });
 
