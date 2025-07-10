@@ -12,7 +12,7 @@ import { useTaskContext } from '../context/TaskContext';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { tasks, questions, resetScores, getTopTasks } = useTaskContext();
+  const { tasks, questions, resetScores, getRandomTopTask } = useTaskContext();
 
   const handleStartSurvey = () => {
     if (questions.length === 0) {
@@ -30,7 +30,7 @@ const HomeScreen: React.FC = () => {
     navigation.navigate('Tasks' as never);
   };
 
-  const topTasks = getTopTasks(3);
+  const recommendedTask = getRandomTopTask();
 
   return (
     <ScrollView style={styles.container}>
@@ -75,15 +75,18 @@ const HomeScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {topTasks.length > 0 && (
-        <View style={styles.topTasksContainer}>
-          <Text style={styles.sectionTitle}>Recommended for You</Text>
-          {topTasks.map((task, index) => (
-            <View key={task.id} style={styles.taskItem}>
-              <Text style={styles.taskName}>{task.name}</Text>
-              <Text style={styles.taskScore}>Match: {task.score}</Text>
+      {recommendedTask && (
+        <View style={styles.recommendationContainer}>
+          <Text style={styles.sectionTitle}>Your Perfect Activity</Text>
+          <View style={styles.recommendationCard}>
+            <Text style={styles.recommendationText}>{recommendedTask.name}</Text>
+            <Text style={styles.recommendationSubtext}>
+              This activity matches your current preferences perfectly
+            </Text>
+            <View style={styles.matchIndicator}>
+              <Text style={styles.matchText}>Match: {recommendedTask.score}</Text>
             </View>
-          ))}
+          </View>
         </View>
       )}
     </ScrollView>
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.5,
   },
-  topTasksContainer: {
+  recommendationContainer: {
     padding: 20,
     marginTop: 24,
   },
@@ -195,29 +198,45 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
   },
-  taskItem: {
+  recommendationCard: {
     backgroundColor: '#ffffff',
-    padding: 20,
-    borderRadius: 16,
-    marginBottom: 12,
+    padding: 24,
+    borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
     borderWidth: 1,
     borderColor: '#f7fafc',
+    alignItems: 'center',
   },
-  taskName: {
-    fontSize: 16,
+  recommendationText: {
+    fontSize: 20,
     fontWeight: '500',
     color: '#2d3748',
-    marginBottom: 4,
+    textAlign: 'center',
+    marginBottom: 8,
   },
-  taskScore: {
+  recommendationSubtext: {
     fontSize: 14,
+    color: '#718096',
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 16,
+  },
+  matchIndicator: {
+    backgroundColor: '#f7fafc',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  matchText: {
+    fontSize: 12,
     color: '#667eea',
-    fontWeight: '500',
+    fontWeight: '600',
   },
 });
 

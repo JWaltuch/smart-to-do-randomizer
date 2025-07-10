@@ -16,6 +16,7 @@ interface TaskContextType {
   updateTaskScore: (taskId: string, score: number) => void;
   resetScores: () => void;
   getTopTasks: (count: number) => Task[];
+  getRandomTopTask: () => Task | null;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -148,6 +149,29 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
       .slice(0, count);
   };
 
+  const getRandomTopTask = (): Task | null => {
+    const tasksWithScores = tasks
+      .map((task: Task) => {
+        const score = currentScores.find((s: TaskScore) => s.taskId === task.id)?.score || 0;
+        return { ...task, score };
+      })
+      .filter((task: Task) => task.score > 0);
+
+    if (tasksWithScores.length === 0) {
+      return null;
+    }
+
+    // Find the highest score
+    const maxScore = Math.max(...tasksWithScores.map((task: Task) => task.score));
+    
+    // Get all tasks with the highest score
+    const topTasks = tasksWithScores.filter((task: Task) => task.score >= maxScore);
+    
+    // Return a random task from the top scoring tasks
+    const randomIndex = Math.floor(Math.random() * topTasks.length);
+    return topTasks[randomIndex];
+  };
+
   const value: TaskContextType = {
     tasks,
     questions,
@@ -161,6 +185,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     updateTaskScore,
     resetScores,
     getTopTasks,
+    getRandomTopTask,
   };
 
   return (

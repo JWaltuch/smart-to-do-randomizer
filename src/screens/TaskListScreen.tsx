@@ -13,8 +13,9 @@ import {
 import { useTaskContext } from '../context/TaskContext';
 
 const TaskListScreen: React.FC = () => {
-  const { tasks, addTask, updateTask, deleteTask, currentScores } = useTaskContext();
+  const { tasks, addTask, updateTask, deleteTask, currentScores, getTopTasks } = useTaskContext();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showFullResults, setShowFullResults] = useState(false);
   const [newTaskName, setNewTaskName] = useState('');
   const [newTaskProperties, setNewTaskProperties] = useState<Record<string, boolean>>({
     indoor: false,
@@ -83,6 +84,8 @@ const TaskListScreen: React.FC = () => {
     }));
   };
 
+  const topTasks = getTopTasks(5); // Get top 5 for the hidden feature
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.taskList}>
@@ -133,6 +136,31 @@ const TaskListScreen: React.FC = () => {
               </View>
             );
           })
+        )}
+
+        {/* Hidden feature - subtle way to see top results */}
+        {topTasks.length > 0 && (
+          <TouchableOpacity
+            style={styles.hiddenFeature}
+            onPress={() => setShowFullResults(!showFullResults)}
+          >
+            <Text style={styles.hiddenFeatureText}>
+              {showFullResults ? 'Hide' : 'Show'} top matches ({topTasks.length})
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {showFullResults && topTasks.length > 0 && (
+          <View style={styles.fullResultsContainer}>
+            <Text style={styles.fullResultsTitle}>Top Matches</Text>
+            {topTasks.map((task, index) => (
+              <View key={task.id} style={styles.topTaskCard}>
+                <Text style={styles.topTaskRank}>#{index + 1}</Text>
+                <Text style={styles.topTaskName}>{task.name}</Text>
+                <Text style={styles.topTaskScore}>Match: {task.score}</Text>
+              </View>
+            ))}
+          </View>
         )}
       </ScrollView>
 
@@ -296,6 +324,60 @@ const styles = StyleSheet.create({
   propertyTagText: {
     fontSize: 12,
     color: '#4a5568',
+    fontWeight: '500',
+  },
+  hiddenFeature: {
+    padding: 12,
+    marginTop: 16,
+    backgroundColor: '#f7fafc',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    alignItems: 'center',
+  },
+  hiddenFeatureText: {
+    fontSize: 12,
+    color: '#a0aec0',
+    fontWeight: '500',
+  },
+  fullResultsContainer: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#f7fafc',
+  },
+  fullResultsTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#2d3748',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  topTaskCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f7fafc',
+  },
+  topTaskRank: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#667eea',
+    marginRight: 12,
+    minWidth: 20,
+  },
+  topTaskName: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#2d3748',
+    flex: 1,
+  },
+  topTaskScore: {
+    fontSize: 12,
+    color: '#718096',
     fontWeight: '500',
   },
   addButton: {
