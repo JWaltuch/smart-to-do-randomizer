@@ -11,12 +11,20 @@ import {
   Switch,
 } from 'react-native';
 import { useTaskContext } from '../context/TaskContext';
+import { Task } from '../types';
 
 const TaskListScreen: React.FC = () => {
-  const { tasks, addTask, updateTask, deleteTask, currentScores, getTopTasks } = useTaskContext();
+  const { tasks, addTask, updateTask, deleteTask, currentScores, getTopTasks, addProperty, answeredQuestions, questions } = useTaskContext();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showFullResults, setShowFullResults] = useState(false);
   const [newTaskName, setNewTaskName] = useState('');
+  const [newPropertyName, setNewPropertyName] = useState('');
+  const [newPropertyQuestion, setNewPropertyQuestion] = useState('');
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [editTaskName, setEditTaskName] = useState('');
+  const [editTaskProperties, setEditTaskProperties] = useState<Record<string, boolean>>({});
   const [newTaskProperties, setNewTaskProperties] = useState<Record<string, boolean>>({
     indoor: false,
     physical: false,
@@ -52,6 +60,54 @@ const TaskListScreen: React.FC = () => {
     setShowAddModal(false);
   };
 
+  const handleAddProperty = () => {
+    if (!newPropertyName.trim()) {
+      Alert.alert('Error', 'Please enter a property name');
+      return;
+    }
+
+    if (!newPropertyQuestion.trim()) {
+      Alert.alert('Error', 'Please enter a question for this property');
+      return;
+    }
+
+    addProperty(newPropertyName.trim().toLowerCase(), newPropertyQuestion.trim());
+    setNewPropertyName('');
+    setNewPropertyQuestion('');
+    setShowAddPropertyModal(false);
+  };
+
+  const handleEditTask = (task: Task) => {
+    setEditingTask(task);
+    setEditTaskName(task.name);
+    setEditTaskProperties({ ...task.properties });
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (!editingTask || !editTaskName.trim()) {
+      Alert.alert('Error', 'Please enter an activity name');
+      return;
+    }
+
+    updateTask(editingTask.id, {
+      name: editTaskName.trim(),
+      properties: editTaskProperties,
+    });
+
+    setShowEditModal(false);
+    setEditingTask(null);
+    setEditTaskName('');
+    setEditTaskProperties({});
+  };
+
+  const toggleEditProperty = (property: string) => {
+    setEditTaskProperties(prev => ({
+      ...prev,
+      [property]: !prev[property],
+    }));
+  };
+
   const handleDeleteTask = (taskId: string) => {
     Alert.alert(
       'Remove Activity',
@@ -84,6 +140,10 @@ const TaskListScreen: React.FC = () => {
     }));
   };
 
+  // Determine journey state
+  const hasAnsweredQuestions = Object.keys(answeredQuestions).length > 0;
+  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answeredQuestions).length >= questions.length;
+  
   const topTasks = getTopTasks(5); // Get top 5 for the hidden feature
 
   return (
@@ -104,12 +164,20 @@ const TaskListScreen: React.FC = () => {
               <View key={task.id} style={styles.taskCard}>
                 <View style={styles.taskHeader}>
                   <Text style={styles.taskName}>{task.name}</Text>
-                  <TouchableOpacity
-                    style={styles.deleteButton}
-                    onPress={() => handleDeleteTask(task.id)}
-                  >
-                    <Text style={styles.deleteButtonText}>×</Text>
-                  </TouchableOpacity>
+                  <View style={styles.taskActions}>
+                    <TouchableOpacity
+                      style={styles.editButton}
+                      onPress={() => handleEditTask(task)}
+                    >
+                      <Text style={styles.editButtonText}>✎</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.deleteButton}
+                      onPress={() => handleDeleteTask(task.id)}
+                    >
+                      <Text style={styles.deleteButtonText}>×</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
 
                 {score > 0 && (
@@ -145,7 +213,7 @@ const TaskListScreen: React.FC = () => {
         )}
 
         {/* Hidden feature - subtle way to see top results */}
-        {topTasks.length > 0 && (
+        {hasCompletedJourney && topTasks.length > 0 && (
           <TouchableOpacity
             style={styles.hiddenFeature}
             onPress={() => setShowFullResults(!showFullResults)}
@@ -170,12 +238,21 @@ const TaskListScreen: React.FC = () => {
         )}
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => setShowAddModal(true)}
-      >
-        <Text style={styles.addButtonText}>+ Add Activity</Text>
-      </TouchableOpacity>
+      <View style={styles.bottomButtons}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => setShowAddModal(true)}
+        >
+          <Text style={styles.addButtonText}>+ Add Activity</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.addPropertyButton}
+          onPress={() => setShowAddPropertyModal(true)}
+        >
+          <Text style={styles.addPropertyButtonText}>+ Add Property</Text>
+        </TouchableOpacity>
+      </View>
 
       <Modal
         visible={showAddModal}
@@ -228,6 +305,104 @@ const TaskListScreen: React.FC = () => {
           </View>
         </View>
       </Modal>
+
+      <Modal
+        visible={showAddPropertyModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowAddPropertyModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Add New Property</Text>
+            
+            <TextInput
+              style={styles.input}
+              placeholder="Property name (e.g., outdoor, quiet)"
+              value={newPropertyName}
+              onChangeText={setNewPropertyName}
+              autoFocus
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Question for this property (e.g., Do you want to work outdoors?)"
+              value={newPropertyQuestion}
+              onChangeText={setNewPropertyQuestion}
+              multiline
+              numberOfLines={3}
+            />
+
+            <View style={styles.modalActions}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.cancelButton]}
+                onPress={() => setShowAddPropertyModal(false)}
+              >
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.modalButton, styles.saveButton]}
+                onPress={handleAddProperty}
+              >
+                <Text style={styles.saveButtonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        visible={showEditModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowEditModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Edit Activity</Text>
+            
+            <TextInput
+              style={styles.input}
+              placeholder="Activity name"
+              value={editTaskName}
+              onChangeText={setEditTaskName}
+              autoFocus
+            />
+
+            <Text style={styles.propertiesTitle}>Activity Traits</Text>
+            <View style={styles.propertiesList}>
+              {Object.entries(editTaskProperties).map(([property, value]) => (
+                <View key={property} style={styles.propertyRow}>
+                  <Text style={styles.propertyLabel}>{property}</Text>
+                  <Switch
+                    value={value}
+                    onValueChange={() => toggleEditProperty(property)}
+                    trackColor={{ false: '#e2e8f0', true: '#667eea' }}
+                    thumbColor={value ? '#ffffff' : '#f4f3f4'}
+                  />
+                </View>
+              ))}
+            </View>
+
+            <View style={styles.modalActions}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.cancelButton]}
+                onPress={() => setShowEditModal(false)}
+              >
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.modalButton, styles.saveButton]}
+                onPress={handleSaveEdit}
+              >
+                <Text style={styles.saveButtonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -240,6 +415,7 @@ const styles = StyleSheet.create({
   taskList: {
     flex: 1,
     padding: 20,
+    paddingBottom: 0, // Remove bottom padding since we have bottom buttons
   },
   emptyState: {
     alignItems: 'center',
@@ -281,6 +457,25 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#2d3748',
     flex: 1,
+  },
+  taskActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  editButton: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#e6fffa',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#81e6d9',
+  },
+  editButtonText: {
+    color: '#319795',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   deleteButton: {
     width: 24,
@@ -400,9 +595,14 @@ const styles = StyleSheet.create({
     color: '#718096',
     fontWeight: '500',
   },
+  bottomButtons: {
+    flexDirection: 'column',
+    gap: 12,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
   addButton: {
     backgroundColor: '#667eea',
-    margin: 20,
     paddingVertical: 18,
     borderRadius: 16,
     alignItems: 'center',
@@ -413,6 +613,23 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   addButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+  addPropertyButton: {
+    backgroundColor: '#48bb78',
+    paddingVertical: 18,
+    borderRadius: 16,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  addPropertyButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',

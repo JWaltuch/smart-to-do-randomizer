@@ -34,6 +34,7 @@
 - **Property Tag Color Coding**: All activity properties display with color coding - green for true, gentle orange for false
 - **Complete Property Visibility**: All properties shown (not just true ones) for better transparency
 - **Automatic Updates**: New properties automatically added to all existing tasks (defaulting to false)
+- **Property Context Integration**: `addProperty` function in TaskContext for seamless property management
 
 #### **UI/UX Enhancements**
 - **Soothing Mental Health Theme**: Gentle color palette and supportive language
@@ -49,6 +50,7 @@
 - **TypeScript**: Enhanced type safety throughout the application
 - **iOS Simulator Support**: Custom script for reliable iOS development
 - **App Configuration**: Clean app.json without missing asset references
+- **App Name**: Changed from "Smart To-Do Randomizer" to "Task Randomizer" for clarity
 
 #### **Navigation & Flow**
 - **Smart Navigation**: Results screen instead of task list after survey completion

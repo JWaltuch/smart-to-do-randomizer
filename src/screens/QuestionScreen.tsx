@@ -110,7 +110,6 @@ const QuestionScreen: React.FC = () => {
       <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         <View style={styles.questionContainer}>
           <Text style={styles.questionText}>{currentQuestion.text}</Text>
-          <Text style={styles.propertyText}>Focus: {currentQuestion.property}</Text>
         </View>
 
         <View style={styles.answerContainer}>

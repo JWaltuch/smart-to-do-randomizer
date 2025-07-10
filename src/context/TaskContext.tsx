@@ -16,6 +16,7 @@ interface TaskContextType {
   deleteQuestion: (questionId: string) => void;
   updateTaskScore: (taskId: string, score: number) => void;
   addAnsweredQuestion: (questionId: string, answer: boolean) => void;
+  addProperty: (propertyName: string, questionText: string) => void;
   resetScores: () => void;
   getTopTasks: (count: number) => Task[];
   getRandomTopTask: () => Task | null;
@@ -145,6 +146,27 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     }));
   };
 
+  const addProperty = (propertyName: string, questionText: string) => {
+    // Add the new property to all existing tasks (defaulting to false)
+    const updatedTasks = tasks.map(task => ({
+      ...task,
+      properties: {
+        ...task.properties,
+        [propertyName]: false,
+      },
+    }));
+    setTasks(updatedTasks);
+    saveTasks(updatedTasks);
+
+    // Create a new question for this property
+    const newQuestion: Question = {
+      id: Date.now().toString(),
+      text: questionText,
+      property: propertyName,
+    };
+    addQuestion(newQuestion);
+  };
+
   const resetScores = () => {
     setCurrentScores([]);
     setAnsweredQuestions({});
@@ -196,6 +218,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     deleteQuestion,
     updateTaskScore,
     addAnsweredQuestion,
+    addProperty,
     resetScores,
     getTopTasks,
     getRandomTopTask,
