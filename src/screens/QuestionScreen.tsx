@@ -9,10 +9,11 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTaskContext } from '../context/TaskContext';
+import { TaskScore } from '../types';
 
 const QuestionScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { questions, tasks, updateTaskScore, resetScores } = useTaskContext();
+  const { questions, tasks, currentScores, updateTaskScore, resetScores } = useTaskContext();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
 
@@ -33,7 +34,7 @@ const QuestionScreen: React.FC = () => {
     
     tasks.forEach(task => {
       if (task.properties[property] === response) {
-        const currentScore = task.score || 0;
+        const currentScore = currentScores.find((s: TaskScore) => s.taskId === task.id)?.score || 0;
         updateTaskScore(task.id, currentScore + 1);
       }
     });

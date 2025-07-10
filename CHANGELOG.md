@@ -223,5 +223,10 @@
 - "Back to Home" button on ResultScreen for easy navigation back to the main screen
 - Graceful handling when no strong match is found (shows helpful message)
 
+### Fixed
+- **Scoring Algorithm Bug**: Fixed issue where all tasks only received a score of 1 regardless of how many questions were answered correctly
+- **Score Accumulation**: Tasks now properly accumulate scores across multiple questions (e.g., answering "yes" to 3 questions now gives a score of 3 instead of 1)
+- **Context Integration**: Fixed scoring logic to use currentScores from context instead of task.score property
+
 ### Changed
 - Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users. 
