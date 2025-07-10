@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.1] - 2024-12-19
+
+### 🔧 **iOS Simulator Configuration Fix**
+
+#### **Runtime Bundle Error Resolution**
+- **Fixed**: iOS simulator runtime bundle errors by specifying correct device
+- **Added**: Custom `start-ios.sh` script to boot iPhone 16 Pro simulator
+- **Enhanced**: `npm run ios-sim` command for reliable iOS development
+- **Improved**: Expo settings configuration for better development experience
+
+#### **Development Tools**
+- **Script**: `scripts/start-ios.sh` - Automatically boots correct simulator
+- **NPM Script**: `npm run ios-sim` - Easy iOS simulator startup
+- **Configuration**: `.expo/settings.json` - Proper Expo development settings
+
+---
+
 ## [1.2.0] - 2024-12-19
 
 ### 🎯 **Anti-Analysis Paralysis Feature**
