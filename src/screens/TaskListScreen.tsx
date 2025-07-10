@@ -99,9 +99,6 @@ const TaskListScreen: React.FC = () => {
         ) : (
           sortedTasks.map(task => {
             const score = getTaskScore(task.id);
-            const properties = Object.entries(task.properties)
-              .filter(([_, value]) => value)
-              .map(([key, _]) => key);
 
             return (
               <View key={task.id} style={styles.taskCard}>
@@ -121,18 +118,27 @@ const TaskListScreen: React.FC = () => {
                   </View>
                 )}
 
-                {properties.length > 0 && (
-                  <View style={styles.propertiesContainer}>
-                    <Text style={styles.propertiesLabel}>Traits:</Text>
-                    <View style={styles.propertyTags}>
-                      {properties.map(property => (
-                        <View key={property} style={styles.propertyTag}>
-                          <Text style={styles.propertyTagText}>{property}</Text>
-                        </View>
-                      ))}
-                    </View>
+                <View style={styles.propertiesContainer}>
+                  <Text style={styles.propertiesLabel}>Traits:</Text>
+                  <View style={styles.propertyTags}>
+                    {Object.entries(task.properties).map(([property, value]) => (
+                      <View 
+                        key={property} 
+                        style={[
+                          styles.propertyTag,
+                          value ? styles.propertyTagTrue : styles.propertyTagFalse
+                        ]}
+                      >
+                        <Text style={[
+                          styles.propertyTagText,
+                          value ? styles.propertyTagTextTrue : styles.propertyTagTextFalse
+                        ]}>
+                          {property}
+                        </Text>
+                      </View>
+                    ))}
                   </View>
-                )}
+                </View>
               </View>
             );
           })
@@ -321,10 +327,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
+  propertyTagTrue: {
+    backgroundColor: '#f0fff4',
+    borderColor: '#48bb78',
+  },
+  propertyTagFalse: {
+    backgroundColor: '#fef5e7',
+    borderColor: '#ed8936',
+  },
   propertyTagText: {
     fontSize: 12,
     color: '#4a5568',
     fontWeight: '500',
+  },
+  propertyTagTextTrue: {
+    color: '#22543d',
+  },
+  propertyTagTextFalse: {
+    color: '#9c4221',
   },
   hiddenFeature: {
     padding: 12,

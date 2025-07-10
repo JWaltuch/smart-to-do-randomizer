@@ -222,6 +222,8 @@
 - Navigation flow now directs users to ResultScreen instead of the full task list after survey completion
 - "Back to Home" button on ResultScreen for easy navigation back to the main screen
 - Graceful handling when no strong match is found (shows helpful message)
+- **Property Tag Color Coding**: All activity properties now display with color coding - green for true, gentle orange for false
+- **Complete Property Visibility**: All properties are now shown (not just true ones) for better transparency
 
 ### Fixed
 - **Scoring Algorithm Bug**: Fixed issue where all tasks only received a score of 1 regardless of how many questions were answered correctly
