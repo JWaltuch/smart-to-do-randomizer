@@ -13,20 +13,16 @@ import { TaskScore } from '../types';
 
 const QuestionScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { questions, tasks, currentScores, updateTaskScore, resetScores } = useTaskContext();
+  const { questions, tasks, currentScores, updateTaskScore, addAnsweredQuestion, resetScores } = useTaskContext();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, boolean>>({});
 
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleAnswer = (answer: boolean) => {
     if (!currentQuestion) return;
 
-    // Store the answer
-    setAnswers(prev => ({
-      ...prev,
-      [currentQuestion.id]: answer,
-    }));
+    // Store the answer in context
+    addAnsweredQuestion(currentQuestion.id, answer);
 
     // Update task scores based on the answer
     const property = currentQuestion.property;
@@ -77,7 +73,6 @@ const QuestionScreen: React.FC = () => {
           onPress: () => {
             resetScores();
             setCurrentQuestionIndex(0);
-            setAnswers({});
           },
         },
       ]

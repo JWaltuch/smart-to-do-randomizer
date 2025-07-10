@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.1] - 2024-12-19
+## [1.2.1] - 2025-07-10
 
 ### 🔧 **iOS Simulator Configuration Fix**
 
@@ -17,7 +17,7 @@
 
 ---
 
-## [1.2.0] - 2024-12-19
+## [1.2.0] - 2025-07-10
 
 ### 🎯 **Anti-Analysis Paralysis Feature**
 
@@ -121,7 +121,7 @@
 
 ---
 
-## [1.1.0] - 2024-12-19
+## [1.1.0] - 2025-07-10
 
 ### 🎨 **Theme Overhaul - Soothing Mental Health App Design**
 
@@ -224,10 +224,13 @@
 - Graceful handling when no strong match is found (shows helpful message)
 - **Property Tag Color Coding**: All activity properties now display with color coding - green for true, gentle orange for false
 - **Complete Property Visibility**: All properties are now shown (not just true ones) for better transparency
+- **Smart Journey Button**: Combined "Begin Journey", "Continue Journey", and "Start Fresh" into one adaptive button that changes based on journey state
+- **Journey State Tracking**: Added persistent tracking of answered questions to properly determine journey completion
 
 ### Changed
 - **App Name**: Changed from "Mindful Tasks" to "Task Randomizer" for clarity
 - **Home Screen**: Removed activity and guide count statistics for cleaner, more focused interface
+- **Button Logic**: Single journey button now intelligently adapts: "Begin Journey" (no answers), "Continue Journey" (partial answers), "Start Fresh" (completed journey)
 - Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users.
 
 ### Fixed

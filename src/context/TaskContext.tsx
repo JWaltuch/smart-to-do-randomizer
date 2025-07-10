@@ -7,6 +7,7 @@ interface TaskContextType {
   tasks: Task[];
   questions: Question[];
   currentScores: TaskScore[];
+  answeredQuestions: Record<string, boolean>;
   addTask: (task: Task) => void;
   updateTask: (taskId: string, updates: Partial<Task>) => void;
   deleteTask: (taskId: string) => void;
@@ -14,6 +15,7 @@ interface TaskContextType {
   updateQuestion: (questionId: string, updates: Partial<Question>) => void;
   deleteQuestion: (questionId: string) => void;
   updateTaskScore: (taskId: string, score: number) => void;
+  addAnsweredQuestion: (questionId: string, answer: boolean) => void;
   resetScores: () => void;
   getTopTasks: (count: number) => Task[];
   getRandomTopTask: () => Task | null;
@@ -37,6 +39,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentScores, setCurrentScores] = useState<TaskScore[]>([]);
+  const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, boolean>>({});
 
   // Load data from AsyncStorage on app start
   useEffect(() => {
@@ -135,8 +138,16 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     });
   };
 
+  const addAnsweredQuestion = (questionId: string, answer: boolean) => {
+    setAnsweredQuestions(prev => ({
+      ...prev,
+      [questionId]: answer,
+    }));
+  };
+
   const resetScores = () => {
     setCurrentScores([]);
+    setAnsweredQuestions({});
   };
 
   const getTopTasks = (count: number): Task[] => {
@@ -176,6 +187,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     tasks,
     questions,
     currentScores,
+    answeredQuestions,
     addTask,
     updateTask,
     deleteTask,
@@ -183,6 +195,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     updateQuestion,
     deleteQuestion,
     updateTaskScore,
+    addAnsweredQuestion,
     resetScores,
     getTopTasks,
     getRandomTopTask,

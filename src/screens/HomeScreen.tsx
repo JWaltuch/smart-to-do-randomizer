@@ -12,9 +12,25 @@ import { useTaskContext } from '../context/TaskContext';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { tasks, questions, resetScores, getRandomTopTask } = useTaskContext();
+  const { tasks, questions, currentScores, answeredQuestions, resetScores, getRandomTopTask } = useTaskContext();
 
-  const handleStartSurvey = () => {
+  // Determine journey state
+  const hasAnsweredQuestions = Object.keys(answeredQuestions).length > 0;
+  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answeredQuestions).length >= questions.length;
+
+  const getJourneyButtonText = () => {
+    if (!hasAnsweredQuestions) return 'Begin Journey';
+    if (hasCompletedJourney) return 'Start Fresh';
+    return 'Continue Journey';
+  };
+
+  const getJourneyButtonStyle = () => {
+    if (!hasAnsweredQuestions) return styles.primaryButton;
+    if (hasCompletedJourney) return styles.resetButton;
+    return styles.secondaryButton;
+  };
+
+  const handleJourneyButton = () => {
     if (questions.length === 0) {
       Alert.alert(
         'No Questions Available',
@@ -23,6 +39,11 @@ const HomeScreen: React.FC = () => {
       );
       return;
     }
+
+    if (hasCompletedJourney) {
+      resetScores();
+    }
+    
     navigation.navigate('Questions' as never);
   };
 
@@ -43,10 +64,10 @@ const HomeScreen: React.FC = () => {
 
       <View style={styles.actionContainer}>
         <TouchableOpacity
-          style={[styles.button, styles.primaryButton]}
-          onPress={handleStartSurvey}
+          style={[styles.button, getJourneyButtonStyle()]}
+          onPress={handleJourneyButton}
         >
-          <Text style={styles.buttonText}>Begin Journey</Text>
+          <Text style={styles.buttonText}>{getJourneyButtonText()}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -54,13 +75,6 @@ const HomeScreen: React.FC = () => {
           onPress={handleViewTasks}
         >
           <Text style={styles.buttonText}>View Activities</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, styles.resetButton]}
-          onPress={resetScores}
-        >
-          <Text style={styles.buttonText}>Start Fresh</Text>
         </TouchableOpacity>
       </View>
 
