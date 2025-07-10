@@ -217,5 +217,11 @@
 
 ## [Unreleased]
 
+### Added
+- New ResultScreen that displays a single random top task recommendation after completing the survey
+- Navigation flow now directs users to ResultScreen instead of the full task list after survey completion
+- "Back to Home" button on ResultScreen for easy navigation back to the main screen
+- Graceful handling when no strong match is found (shows helpful message)
+
 ### Changed
 - Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users. 
