@@ -231,6 +231,8 @@
 - **App Name**: Changed from "Mindful Tasks" to "Task Randomizer" for clarity
 - **Home Screen**: Removed activity and guide count statistics for cleaner, more focused interface
 - **Button Logic**: Single journey button now intelligently adapts: "Begin Journey" (no answers), "Continue Journey" (partial answers), "Start Fresh" (completed journey)
+- **Question Flow**: Removed skip button to ensure users complete the full journey experience
+- **Result Display**: Recommendations only show when journey is fully completed, preventing partial results
 - Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users.
 
 ### Fixed

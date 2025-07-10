@@ -78,7 +78,7 @@ const HomeScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {recommendedTask && (
+      {hasCompletedJourney && recommendedTask && (
         <View style={styles.recommendationContainer}>
           <Text style={styles.sectionTitle}>Your Perfect Activity</Text>
           <View style={styles.recommendationCard}>

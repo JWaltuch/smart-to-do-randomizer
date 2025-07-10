@@ -53,13 +53,7 @@ const QuestionScreen: React.FC = () => {
     }
   };
 
-  const handleSkip = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      navigation.navigate('Result' as never);
-    }
-  };
+
 
   const handleReset = () => {
     Alert.alert(
@@ -136,10 +130,6 @@ const QuestionScreen: React.FC = () => {
         </View>
 
         <View style={styles.actionContainer}>
-          <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-            <Text style={styles.skipButtonText}>Skip</Text>
-          </TouchableOpacity>
-
           <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
             <Text style={styles.resetButtonText}>Begin Again</Text>
           </TouchableOpacity>
