@@ -1,123 +1,60 @@
 # Changelog
 
-## [1.2.1] - 2025-07-10
+## [1.0.0] - 2025-07-10
 
-### 🔧 **iOS Simulator Configuration Fix**
+### 🎉 **Initial Release - Task Randomizer**
 
-#### **Runtime Bundle Error Resolution**
-- **Fixed**: iOS simulator runtime bundle errors by specifying correct device
-- **Added**: Custom `start-ios.sh` script to boot iPhone 16 Pro simulator
-- **Enhanced**: `npm run ios-sim` command for reliable iOS development
-- **Improved**: Expo settings configuration for better development experience
+#### **Core Features**
+- **Complete React Native mobile app** with Expo framework
+- **Question-based task recommendation system** that intelligently matches activities to user preferences
+- **Local data persistence** with AsyncStorage for tasks, questions, and journey state
+- **Modern UI** with soothing mental health app theme and gentle user experience
 
-#### **Development Tools**
-- **Script**: `scripts/start-ios.sh` - Automatically boots correct simulator
-- **NPM Script**: `npm run ios-sim` - Easy iOS simulator startup
-- **Configuration**: `.expo/settings.json` - Proper Expo development settings
+#### **Smart Journey System**
+- **Adaptive Journey Button**: Single button that intelligently changes based on journey state
+  - "Begin Journey" (blue) - when no questions answered
+  - "Continue Journey" (green) - when some questions answered but not all
+  - "Start Fresh" (orange) - when all questions completed (clears scores)
+- **Journey State Tracking**: Persistent tracking of answered questions to properly determine journey completion
+- **Complete Journey Flow**: Users must answer all questions before seeing recommendations
+- **No Skip Option**: Removed skip button to ensure users complete the full journey experience
 
----
+#### **Result & Recommendation System**
+- **ResultScreen**: Dedicated screen showing single random top task recommendation after survey completion
+- **Single Recommendation**: Home screen shows only ONE random recommendation instead of a list to prevent analysis paralysis
+- **Back to Home Navigation**: Easy navigation back to main screen from results
+- **Graceful Handling**: Helpful message when no strong match is found
+- **Hidden Full Results**: Complete results list available as subtle feature in Activities screen
 
-## [1.2.0] - 2025-07-10
-
-### 🎯 **Anti-Analysis Paralysis Feature**
-
-#### **Single Recommendation Display**
-- **Primary Change**: Home screen now shows only ONE random recommendation instead of a list
-- **Random Selection**: App randomly chooses from tasks with the highest score to prevent decision fatigue
-- **Hidden Full Results**: Complete results list is now a subtle, non-obvious feature in the Activities screen
-- **Purpose**: Eliminates analysis paralysis by presenting a single, confident recommendation
-
-#### **Smart Randomization Logic**
-- **Highest Score Filter**: Only considers tasks with scores >= the highest score
-- **Random Selection**: Picks randomly from top-scoring tasks to avoid bias
-- **Fallback**: Returns null if no tasks have scores > 0
-
-#### **Hidden Feature Implementation**
-- **Subtle Access**: "Show top matches" button appears only when there are scored tasks
-- **Toggle Functionality**: Users can expand/collapse the full results list
-- **Non-Intrusive**: Hidden feature doesn't interfere with the main single-recommendation flow
-
-### 🎨 **Theme Overhaul - Soothing Mental Health App Design**
-
-#### **Color Palette Updates**
-- **Primary Color**: Changed from harsh indigo (`#6366f1`) to soft indigo (`#667eea`)
-- **Secondary Color**: Updated from bright green (`#10b981`) to gentle green (`#48bb78`)
-- **Accent Color**: Changed from red (`#ef4444`) to warm orange (`#ed8936`)
-- **Background**: Updated to softer light gray (`#f8f9fa`)
-- **Text Colors**: Switched to softer charcoal (`#2d3748`) for better readability
-
-#### **Typography Improvements**
-- **Font Weights**: Reduced from bold (600/700) to light (300) for a gentler feel
-- **Letter Spacing**: Added negative letter spacing for more elegant text
-- **Line Heights**: Increased for better readability and breathing room
+#### **Property Management System**
+- **Add New Properties**: Create custom properties with automatic question creation
+- **Property Modal**: Form to create new properties with associated questions
+- **Activity Editing**: Edit existing activities to update their properties and names
+- **Edit Modal**: Form to edit activity names and toggle properties
+- **Property Tag Color Coding**: All activity properties display with color coding - green for true, gentle orange for false
+- **Complete Property Visibility**: All properties shown (not just true ones) for better transparency
+- **Automatic Updates**: New properties automatically added to all existing tasks (defaulting to false)
 
 #### **UI/UX Enhancements**
-- **Rounded Corners**: Increased border radius from 8-12px to 16-20px
-- **Shadows**: Softer, more diffused shadows with lower opacity
-- **Spacing**: More generous padding and margins throughout
-- **Borders**: Added subtle borders to cards for better definition
+- **Soothing Mental Health Theme**: Gentle color palette and supportive language
+- **Property UI**: Stacked vertical buttons for better mobile layout (Add Activity + Add Property)
+- **Question Screen**: Clean question display without technical property information
+- **Hidden Feature Logic**: Top matches only show when journey is completed
+- **Activity Management**: Edit (✎) and delete (×) buttons for each activity
+- **Color-Coded Properties**: Visual property tags with green for true, gentle orange for false
 
-#### **Copy Updates**
-- "Smart To-Do Randomizer" → "Mindful Tasks"
-- "Start Survey" → "Begin Journey"
-- "View All Tasks" → "View Activities"
-- "Reset Scores" → "Start Fresh"
-- "Top Recommended Tasks" → "Your Perfect Activity"
-- "Score" → "Match"
-- "Properties" → "Traits"
-- "Add Task" → "Add Activity"
+#### **Technical Improvements**
+- **Scoring Algorithm**: Fixed score accumulation across multiple questions
+- **Context Integration**: Proper state management with persistent journey tracking
+- **TypeScript**: Enhanced type safety throughout the application
+- **iOS Simulator Support**: Custom script for reliable iOS development
+- **App Configuration**: Clean app.json without missing asset references
 
-### ✅ **Functionality Fixes**
-
-#### **Task Properties Management**
-- **Fixed**: Task properties are now fully editable when creating new activities
-- **Added**: Toggle switches for each property (indoor, physical, quick, creative, social, learning)
-- **Improved**: Visual feedback showing properties as tags on each task
-- **Enhanced**: Modal interface for adding activities with property selection
-
-#### **Property System**
-- **Pre-defined Properties**: indoor, physical, quick, creative, social, learning
-- **Toggle Interface**: Easy on/off switches for each property
-- **Visual Tags**: Properties display as colored tags on task cards
-- **Reset Functionality**: Properties reset to false when adding new activities
-
-### 📱 **Screen-Specific Updates**
-
-#### **HomeScreen**
-- **Single Recommendation**: Shows one random top-scoring activity instead of a list
-- **Confident Presentation**: "Your Perfect Activity" with supportive messaging
-- **Match Indicator**: Subtle score display to show confidence level
-- **Softer Header**: Rounded bottom corners and improved styling
-
-#### **TaskListScreen**
-- **Hidden Results Feature**: Subtle toggle to show/hide full results list
-- **Enhanced Modal**: Property toggles for adding activities
-- **Better Visual Hierarchy**: Improved typography and spacing
-- **Non-Intrusive Design**: Full results don't interfere with main flow
-
-#### **QuestionScreen**
-- **Larger Question Containers**: Better padding and improved readability
-- **Softer Progress Bar**: More elegant styling
-- **Updated Copy**: "Step X of Y" instead of "Question X of Y"
-- **More Elegant Buttons**: Better spacing and styling
-
-#### **Navigation**
-- **Updated Header Colors**: Match new soothing theme
-- **Mindful Screen Titles**: More gentle and supportive language
-- **Consistent Styling**: Unified design across all navigation elements
-
-### 🔧 **Technical Improvements**
-- **TypeScript**: Enhanced type safety for property management and random selection
-- **State Management**: Improved property toggle functionality and random task selection
-- **Performance**: Optimized re-renders for property changes and random selection
-- **Accessibility**: Better contrast ratios and touch targets
-
-### 🎯 **Mental Health Focus**
-- **Anti-Analysis Paralysis**: Single recommendation prevents decision fatigue
-- **Gentle Language**: All copy updated to be more supportive and less task-oriented
-- **Calming Colors**: Color palette designed to reduce stress and anxiety
-- **Mindful Interactions**: User experience focused on gentle guidance rather than rigid task management
-- **Positive Framing**: "Journey" instead of "survey", "activities" instead of "tasks"
+#### **Navigation & Flow**
+- **Smart Navigation**: Results screen instead of task list after survey completion
+- **Conditional Display**: Recommendations only show when journey is fully completed
+- **Clean Home Screen**: Removed statistics for focused interface
+- **App Name**: "Task Randomizer" for clarity about app purpose
 
 ---
 
@@ -198,7 +135,46 @@
 - **Performance**: Optimized re-renders for property changes
 - **Accessibility**: Better contrast ratios and touch targets
 
+---
+
+## [1.2.0] - 2025-07-10
+
+### 🎯 **Anti-Analysis Paralysis Feature**
+
+#### **Single Recommendation Display**
+- **Primary Change**: Home screen now shows only ONE random recommendation instead of a list
+- **Random Selection**: App randomly chooses from tasks with the highest score to prevent decision fatigue
+- **Hidden Full Results**: Complete results list is now a subtle, non-obvious feature in the Activities screen
+- **Purpose**: Eliminates analysis paralysis by presenting a single, confident recommendation
+
+#### **Smart Randomization Logic**
+- **Highest Score Filter**: Only considers tasks with scores >= the highest score
+- **Random Selection**: Picks randomly from top-scoring tasks to avoid bias
+- **Fallback**: Returns null if no tasks have scores > 0
+
+#### **Hidden Feature Implementation**
+- **Subtle Access**: "Show top matches" button appears only when there are scored tasks
+- **Toggle Functionality**: Users can expand/collapse the full results list
+- **Non-Intrusive**: Hidden feature doesn't interfere with the main single-recommendation flow
+
+### 📱 **Screen-Specific Updates**
+
+#### **HomeScreen**
+- **Single Recommendation**: Shows one random top-scoring activity instead of a list
+- **Confident Presentation**: "Your Perfect Activity" with supportive messaging
+- **Match Indicator**: Subtle score display to show confidence level
+
+#### **TaskListScreen**
+- **Hidden Results Feature**: Subtle toggle to show/hide full results list
+- **Non-Intrusive Design**: Full results don't interfere with main flow
+
+### 🔧 **Technical Improvements**
+- **TypeScript**: Enhanced type safety for random selection
+- **State Management**: Improved random task selection
+- **Performance**: Optimized re-renders for random selection
+
 ### 🎯 **Mental Health Focus**
+- **Anti-Analysis Paralysis**: Single recommendation prevents decision fatigue
 - **Gentle Language**: All copy updated to be more supportive and less task-oriented
 - **Calming Colors**: Color palette designed to reduce stress and anxiety
 - **Mindful Interactions**: User experience focused on gentle guidance rather than rigid task management
@@ -206,36 +182,17 @@
 
 ---
 
-## [1.0.0] - 2024-12-19
+## [1.2.1] - 2025-07-10
 
-### 🚀 **Initial Release**
-- Smart to-do randomizer with question-based scoring
-- React Native app with Expo SDK 53
-- Local data persistence with AsyncStorage
-- Security vulnerabilities resolved
-- TypeScript support with React 19 compatibility 
+### 🔧 **iOS Simulator Configuration Fix**
 
-## [Unreleased]
+#### **Runtime Bundle Error Resolution**
+- **Fixed**: iOS simulator runtime bundle errors by specifying correct device
+- **Added**: Custom `start-ios.sh` script to boot iPhone 16 Pro simulator
+- **Enhanced**: `npm run ios-sim` command for reliable iOS development
+- **Improved**: Expo settings configuration for better development experience
 
-### Added
-- New ResultScreen that displays a single random top task recommendation after completing the survey
-- Navigation flow now directs users to ResultScreen instead of the full task list after survey completion
-- "Back to Home" button on ResultScreen for easy navigation back to the main screen
-- Graceful handling when no strong match is found (shows helpful message)
-- **Property Tag Color Coding**: All activity properties now display with color coding - green for true, gentle orange for false
-- **Complete Property Visibility**: All properties are now shown (not just true ones) for better transparency
-- **Smart Journey Button**: Combined "Begin Journey", "Continue Journey", and "Start Fresh" into one adaptive button that changes based on journey state
-- **Journey State Tracking**: Added persistent tracking of answered questions to properly determine journey completion
-
-### Changed
-- **App Name**: Changed from "Mindful Tasks" to "Task Randomizer" for clarity
-- **Home Screen**: Removed activity and guide count statistics for cleaner, more focused interface
-- **Button Logic**: Single journey button now intelligently adapts: "Begin Journey" (no answers), "Continue Journey" (partial answers), "Start Fresh" (completed journey)
-- **Question Flow**: Removed skip button to ensure users complete the full journey experience
-- **Result Display**: Recommendations only show when journey is fully completed, preventing partial results
-- Updated README to clarify that `npm run ios-sim` is a complete alternative to `npm start` + platform selection, and to make the iOS workflow explicit and less confusing for new users.
-
-### Fixed
-- **Scoring Algorithm Bug**: Fixed issue where all tasks only received a score of 1 regardless of how many questions were answered correctly
-- **Score Accumulation**: Tasks now properly accumulate scores across multiple questions (e.g., answering "yes" to 3 questions now gives a score of 3 instead of 1)
-- **Context Integration**: Fixed scoring logic to use currentScores from context instead of task.score property 
+#### **Development Tools**
+- **Script**: `scripts/start-ios.sh` - Automatically boots correct simulator
+- **NPM Script**: `npm run ios-sim` - Easy iOS simulator startup
+- **Configuration**: `.expo/settings.json` - Proper Expo development settings 
