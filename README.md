@@ -1,4 +1,4 @@
-# smart-to-do-randomizer
+# Smart To-Do Randomizer
 
 This is another small project I was thinking about to help me choose what to do with free time when I have analysis paralysis.
 
@@ -11,7 +11,8 @@ Goals:
 Future Possibilities:
 - Login, database with customizable tasks
 
-# smart-to-do-randomizer%
+# Getting Started
+## A README by Cursor
 
 A React Native mobile app that uses a question-based survey to intelligently recommend tasks based on your preferences and current mood.
 
