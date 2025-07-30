@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './src/screens/HomeScreen';
 import QuestionScreen from './src/screens/QuestionScreen';
 import TaskListScreen from './src/screens/TaskListScreen';
+import ResultScreen from './src/screens/ResultScreen';
 import { TaskProvider } from './src/context/TaskContext';
 
 const Stack = createStackNavigator();
@@ -37,7 +38,7 @@ export default function App() {
           />
           <Stack.Screen 
             name="Result" 
-            component={require('./src/screens/ResultScreen').default} 
+            component={ResultScreen} 
             options={{ title: 'Your Recommendation' }}
           />
           <Stack.Screen 

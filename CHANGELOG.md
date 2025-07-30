@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.2] - 2025-07-30
+
+### 🔧 **Import Consistency Fix**
+
+#### **Code Quality Improvement**
+- **Fixed**: Inconsistent import style in App.tsx where ResultScreen used `require()` instead of ES6 import
+- **Added**: Proper ES6 import statement for ResultScreen at the top of the file
+- **Updated**: Component reference to use imported variable instead of require() syntax
+- **Improved**: Code consistency and maintainability across all screen imports
+
+---
+
 ## [1.0.0] - 2025-07-10
 
 ### 🎉 **Initial Release - Task Randomizer**
