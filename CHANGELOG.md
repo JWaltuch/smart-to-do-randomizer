@@ -39,7 +39,6 @@
 - **Added**: Visual feedback with progress dots during emulator/simulator boot
 - **Improved**: Reliability across different machine speeds (fast and slow)
 - **Replaced**: Fixed delays with actual readiness detection using `adb devices` and `xcrun simctl`
-
 ---
 
 ## [1.0.0] - 2025-07-10
