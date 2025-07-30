@@ -25,6 +25,9 @@
 #### **Documentation Improvements**
 - **Added**: Creation date (July 10, 2025) to SECURITY_UPDATE.md
 - **Added**: Security updates reference to version 1.0.0 changelog with link to detailed documentation
+- **Consolidated**: SETUP.md content into README.md to eliminate duplication
+- **Removed**: SETUP.md file to reduce maintenance overhead
+- **Added**: Optional Expo Go app installation instructions to README.md
 
 ---
 

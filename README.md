@@ -44,6 +44,11 @@ Based on your data modeling brainstorm, this app implements:
 - Expo CLI (`npm install -g @expo/cli`)
 - iOS Simulator (for iOS) or Android Studio (for Android)
 
+**Optional - For testing on your phone:**
+- Expo Go app
+  - iOS: [App Store](https://apps.apple.com/app/expo-go/id982107779)
+  - Android: [Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent)
+
 ### Installation
 
 1. **Clone and install dependencies:**
@@ -201,6 +206,24 @@ All data is stored locally using AsyncStorage:
 - The project uses TypeScript for type safety
 - Run `npm run type-check` to check for type errors
 - All type issues should be resolved before committing code
+
+### Development Tips
+- Use `npm start` to restart the development server
+- Shake your device or press `Cmd+D` (iOS) / `Cmd+M` (Android) to open developer menu
+- Enable "Fast Refresh" for instant code updates
+
+## Next Steps
+
+1. **Customize the app** by modifying `src/data/sampleData.ts`
+2. **Add new features** by extending the existing components
+3. **Deploy to app stores** using Expo's build service
+
+## Support
+
+If you encounter issues:
+1. Check the [Expo documentation](https://docs.expo.dev/)
+2. Review the [React Native documentation](https://reactnative.dev/)
+3. Search for similar issues on [Stack Overflow](https://stackoverflow.com/)
 
 ## Contributing
 
