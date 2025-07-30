@@ -34,6 +34,11 @@
 - **Added**: Optional Expo Go app installation instructions to README.md
 - **Clarified**: Development tips to distinguish between simulator shortcuts and physical device gestures
 
+#### **Development Script Improvements**
+- **Enhanced**: iOS and Android startup scripts with robust polling instead of fixed sleep times
+- **Added**: Visual feedback with progress dots during emulator/simulator boot
+- **Improved**: Reliability across different machine speeds (fast and slow)
+- **Replaced**: Fixed delays with actual readiness detection using `adb devices` and `xcrun simctl`
 
 ---
 
