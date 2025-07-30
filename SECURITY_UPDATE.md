@@ -1,5 +1,7 @@
 # Security and Compatibility Updates
 
+*Created: July 10, 2025*
+
 ## ✅ Vulnerabilities Fixed
 
 All 11 vulnerabilities (2 low, 9 high) have been resolved:
