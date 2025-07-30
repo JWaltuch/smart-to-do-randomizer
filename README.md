@@ -209,7 +209,8 @@ All data is stored locally using AsyncStorage:
 
 ### Development Tips
 - Use `npm start` to restart the development server
-- Shake your device or press `Cmd+D` (iOS) / `Cmd+M` (Android) to open developer menu
+- **On simulators/emulators**: Press `Cmd+D` (iOS) / `Cmd+M` (Android) to open developer menu
+- **On physical devices**: Shake your device to open developer menu
 - Enable "Fast Refresh" for instant code updates
 
 ## Next Steps

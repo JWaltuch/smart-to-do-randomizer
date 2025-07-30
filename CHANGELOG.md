@@ -28,6 +28,7 @@
 - **Consolidated**: SETUP.md content into README.md to eliminate duplication
 - **Removed**: SETUP.md file to reduce maintenance overhead
 - **Added**: Optional Expo Go app installation instructions to README.md
+- **Clarified**: Development tips to distinguish between simulator shortcuts and physical device gestures
 
 ---
 
