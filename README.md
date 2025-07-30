@@ -69,6 +69,12 @@ Based on your data modeling brainstorm, this app implements:
    ```
    This automatically boots the iPhone 16 Pro simulator and starts Expo.
 
+   **Option C - Android Emulator:**
+   ```bash
+   npm run android-emu
+   ```
+   This automatically boots the Pixel 7 API 34 emulator and starts Expo.
+
 ### First Time Setup
 
 1. **Add Sample Data** (Optional):
@@ -165,6 +171,7 @@ All data is stored locally using AsyncStorage:
 - `npm run android` - Run on Android
 - `npm run ios` - Run on iOS (may have simulator issues)
 - `npm run ios-sim` - Boot iPhone 16 Pro simulator and start Expo (recommended for iOS)
+- `npm run android-emu` - Boot Pixel 7 API 34 emulator and start Expo (recommended for Android)
 - `npm run web` - Run in web browser
 
 ### Key Technologies
