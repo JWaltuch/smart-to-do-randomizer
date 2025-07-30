@@ -173,6 +173,7 @@ All data is stored locally using AsyncStorage:
 - `npm run ios-sim` - Boot iPhone 16 Pro simulator and start Expo (recommended for iOS)
 - `npm run android-emu` - Boot Pixel 7 API 34 emulator and start Expo (recommended for Android)
 - `npm run web` - Run in web browser
+- `npm run type-check` - Check for TypeScript errors
 
 ### Key Technologies
 
@@ -197,8 +198,9 @@ All data is stored locally using AsyncStorage:
 - Try using a tunnel connection: `npx expo start --tunnel`
 
 ### TypeScript errors
-- The app should work despite TypeScript warnings
-- These are development-time checks and won't affect the running app
+- The project uses TypeScript for type safety
+- Run `npm run type-check` to check for type errors
+- All type issues should be resolved before committing code
 
 ## Contributing
 
