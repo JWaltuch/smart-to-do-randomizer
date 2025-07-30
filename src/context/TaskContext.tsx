@@ -7,7 +7,7 @@ interface TaskContextType {
   tasks: Task[];
   questions: Question[];
   currentScores: TaskScore[];
-  answeredQuestions: Record<string, boolean>;
+  answers: Record<string, boolean>;
   addTask: (task: Task) => void;
   updateTask: (taskId: string, updates: Partial<Task>) => void;
   deleteTask: (taskId: string) => void;
@@ -40,7 +40,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentScores, setCurrentScores] = useState<TaskScore[]>([]);
-  const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, boolean>>({});
+  const [answers, setAnswers] = useState<Record<string, boolean>>({});
 
   // Load data from AsyncStorage on app start
   useEffect(() => {
@@ -140,7 +140,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   };
 
   const addAnsweredQuestion = (questionId: string, answer: boolean) => {
-    setAnsweredQuestions(prev => ({
+    setAnswers(prev => ({
       ...prev,
       [questionId]: answer,
     }));
@@ -169,7 +169,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 
   const resetScores = () => {
     setCurrentScores([]);
-    setAnsweredQuestions({});
+    setAnswers({});
   };
 
   const getTopTasks = (count: number): Task[] => {
@@ -209,7 +209,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     tasks,
     questions,
     currentScores,
-    answeredQuestions,
+    answers,
     addTask,
     updateTask,
     deleteTask,

@@ -12,11 +12,11 @@ import { useTaskContext } from '../context/TaskContext';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { tasks, questions, currentScores, answeredQuestions, resetScores, getRandomTopTask } = useTaskContext();
+  const { tasks, questions, currentScores, answers, resetScores, getRandomTopTask } = useTaskContext();
 
   // Determine journey state
-  const hasAnsweredQuestions = Object.keys(answeredQuestions).length > 0;
-  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answeredQuestions).length >= questions.length;
+  const hasAnsweredQuestions = Object.keys(answers).length > 0;
+  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answers).length >= questions.length;
 
   const getJourneyButtonText = () => {
     if (!hasAnsweredQuestions) return 'Begin Journey';

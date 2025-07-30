@@ -14,7 +14,7 @@ import { useTaskContext } from '../context/TaskContext';
 import { Task } from '../types';
 
 const TaskListScreen: React.FC = () => {
-  const { tasks, addTask, updateTask, deleteTask, currentScores, getTopTasks, addProperty, answeredQuestions, questions } = useTaskContext();
+  const { tasks, addTask, updateTask, deleteTask, currentScores, getTopTasks, addProperty, answers, questions } = useTaskContext();
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -141,8 +141,8 @@ const TaskListScreen: React.FC = () => {
   };
 
   // Determine journey state
-  const hasAnsweredQuestions = Object.keys(answeredQuestions).length > 0;
-  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answeredQuestions).length >= questions.length;
+  const hasAnsweredQuestions = Object.keys(answers).length > 0;
+  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answers).length >= questions.length;
   
   const topTasks = getTopTasks(5); // Get top 5 for the hidden feature
 
