@@ -14,7 +14,17 @@ import { useTaskContext } from '../context/TaskContext';
 import { Task } from '../types';
 
 const TaskListScreen: React.FC = () => {
-  const { tasks, addTask, updateTask, deleteTask, currentScores, getTopTasks, addProperty, answers, questions } = useTaskContext();
+  const {
+    tasks,
+    addTask,
+    updateTask,
+    deleteTask,
+    currentScores,
+    getTopTasks,
+    addProperty,
+    answeredQuestions,
+    questions,
+  } = useTaskContext();
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -24,8 +34,12 @@ const TaskListScreen: React.FC = () => {
   const [newPropertyQuestion, setNewPropertyQuestion] = useState('');
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [editTaskName, setEditTaskName] = useState('');
-  const [editTaskProperties, setEditTaskProperties] = useState<Record<string, boolean>>({});
-  const [newTaskProperties, setNewTaskProperties] = useState<Record<string, boolean>>({
+  const [editTaskProperties, setEditTaskProperties] = useState<
+    Record<string, boolean>
+  >({});
+  const [newTaskProperties, setNewTaskProperties] = useState<
+    Record<string, boolean>
+  >({
     indoor: false,
     physical: false,
     quick: false,
@@ -71,7 +85,10 @@ const TaskListScreen: React.FC = () => {
       return;
     }
 
-    addProperty(newPropertyName.trim().toLowerCase(), newPropertyQuestion.trim());
+    addProperty(
+      newPropertyName.trim().toLowerCase(),
+      newPropertyQuestion.trim()
+    );
     setNewPropertyName('');
     setNewPropertyQuestion('');
     setShowAddPropertyModal(false);
@@ -102,7 +119,7 @@ const TaskListScreen: React.FC = () => {
   };
 
   const toggleEditProperty = (property: string) => {
-    setEditTaskProperties(prev => ({
+    setEditTaskProperties((prev) => ({
       ...prev,
       [property]: !prev[property],
     }));
@@ -124,7 +141,7 @@ const TaskListScreen: React.FC = () => {
   };
 
   const getTaskScore = (taskId: string) => {
-    return currentScores.find(s => s.taskId === taskId)?.score || 0;
+    return currentScores.find((s) => s.taskId === taskId)?.score || 0;
   };
 
   const sortedTasks = [...tasks].sort((a, b) => {
@@ -134,16 +151,17 @@ const TaskListScreen: React.FC = () => {
   });
 
   const toggleProperty = (property: string) => {
-    setNewTaskProperties(prev => ({
+    setNewTaskProperties((prev) => ({
       ...prev,
       [property]: !prev[property],
     }));
   };
 
   // Determine journey state
-  const hasAnsweredQuestions = Object.keys(answers).length > 0;
-  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answers).length >= questions.length;
-  
+  const hasAnsweredQuestions = answeredQuestions.size > 0;
+  const hasCompletedJourney =
+    hasAnsweredQuestions && answeredQuestions.size >= questions.length;
+
   const topTasks = getTopTasks(5); // Get top 5 for the hidden feature
 
   return (
@@ -157,7 +175,7 @@ const TaskListScreen: React.FC = () => {
             </Text>
           </View>
         ) : (
-          sortedTasks.map(task => {
+          sortedTasks.map((task) => {
             const score = getTaskScore(task.id);
 
             return (
@@ -189,22 +207,30 @@ const TaskListScreen: React.FC = () => {
                 <View style={styles.propertiesContainer}>
                   <Text style={styles.propertiesLabel}>Traits:</Text>
                   <View style={styles.propertyTags}>
-                    {Object.entries(task.properties).map(([property, value]) => (
-                      <View 
-                        key={property} 
-                        style={[
-                          styles.propertyTag,
-                          value ? styles.propertyTagTrue : styles.propertyTagFalse
-                        ]}
-                      >
-                        <Text style={[
-                          styles.propertyTagText,
-                          value ? styles.propertyTagTextTrue : styles.propertyTagTextFalse
-                        ]}>
-                          {property}
-                        </Text>
-                      </View>
-                    ))}
+                    {Object.entries(task.properties).map(
+                      ([property, value]) => (
+                        <View
+                          key={property}
+                          style={[
+                            styles.propertyTag,
+                            value
+                              ? styles.propertyTagTrue
+                              : styles.propertyTagFalse,
+                          ]}
+                        >
+                          <Text
+                            style={[
+                              styles.propertyTagText,
+                              value
+                                ? styles.propertyTagTextTrue
+                                : styles.propertyTagTextFalse,
+                            ]}
+                          >
+                            {property}
+                          </Text>
+                        </View>
+                      )
+                    )}
                   </View>
                 </View>
               </View>
@@ -219,7 +245,8 @@ const TaskListScreen: React.FC = () => {
             onPress={() => setShowFullResults(!showFullResults)}
           >
             <Text style={styles.hiddenFeatureText}>
-              {showFullResults ? 'Hide' : 'Show'} top matches ({topTasks.length})
+              {showFullResults ? 'Hide' : 'Show'} top matches ({topTasks.length}
+              )
             </Text>
           </TouchableOpacity>
         )}
@@ -263,7 +290,7 @@ const TaskListScreen: React.FC = () => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Add New Activity</Text>
-            
+
             <TextInput
               style={styles.input}
               placeholder="Activity name"
@@ -315,7 +342,7 @@ const TaskListScreen: React.FC = () => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Add New Property</Text>
-            
+
             <TextInput
               style={styles.input}
               placeholder="Property name (e.g., outdoor, quiet)"
@@ -361,7 +388,7 @@ const TaskListScreen: React.FC = () => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Edit Activity</Text>
-            
+
             <TextInput
               style={styles.input}
               placeholder="Activity name"
@@ -722,4 +749,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TaskListScreen; 
+export default TaskListScreen;

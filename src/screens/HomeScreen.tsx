@@ -12,11 +12,19 @@ import { useTaskContext } from '../context/TaskContext';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { tasks, questions, currentScores, answers, resetScores, getRandomTopTask } = useTaskContext();
+  const {
+    tasks,
+    questions,
+    currentScores,
+    answeredQuestions,
+    resetJourney,
+    getRandomTopTask,
+  } = useTaskContext();
 
   // Determine journey state
-  const hasAnsweredQuestions = Object.keys(answers).length > 0;
-  const hasCompletedJourney = hasAnsweredQuestions && Object.keys(answers).length >= questions.length;
+  const hasAnsweredQuestions = answeredQuestions.size > 0;
+  const hasCompletedJourney =
+    hasAnsweredQuestions && answeredQuestions.size >= questions.length;
 
   const getJourneyButtonText = () => {
     if (!hasAnsweredQuestions) return 'Begin Journey';
@@ -41,9 +49,9 @@ const HomeScreen: React.FC = () => {
     }
 
     if (hasCompletedJourney) {
-      resetScores();
+      resetJourney();
     }
-    
+
     navigation.navigate('Questions' as never);
   };
 
@@ -82,12 +90,16 @@ const HomeScreen: React.FC = () => {
         <View style={styles.recommendationContainer}>
           <Text style={styles.sectionTitle}>Your Perfect Activity</Text>
           <View style={styles.recommendationCard}>
-            <Text style={styles.recommendationText}>{recommendedTask.name}</Text>
+            <Text style={styles.recommendationText}>
+              {recommendedTask.name}
+            </Text>
             <Text style={styles.recommendationSubtext}>
               This activity matches your current preferences perfectly
             </Text>
             <View style={styles.matchIndicator}>
-              <Text style={styles.matchText}>Match: {recommendedTask.score}</Text>
+              <Text style={styles.matchText}>
+                Match: {recommendedTask.score}
+              </Text>
             </View>
           </View>
         </View>
@@ -243,4 +255,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen; 
+export default HomeScreen;

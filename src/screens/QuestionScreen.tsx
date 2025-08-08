@@ -13,7 +13,14 @@ import { TaskScore } from '../types';
 
 const QuestionScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { questions, tasks, currentScores, updateTaskScore, addAnsweredQuestion, resetScores } = useTaskContext();
+  const {
+    questions,
+    tasks,
+    currentScores,
+    updateTaskScore,
+    addAnsweredQuestion,
+    resetJourney,
+  } = useTaskContext();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -22,15 +29,17 @@ const QuestionScreen: React.FC = () => {
     if (!currentQuestion) return;
 
     // Store the answer in context
-    addAnsweredQuestion(currentQuestion.id, answer);
+    addAnsweredQuestion(currentQuestion.id);
 
     // Update task scores based on the answer
     const property = currentQuestion.property;
     const response = answer;
-    
-    tasks.forEach(task => {
+
+    tasks.forEach((task) => {
       if (task.properties[property] === response) {
-        const currentScore = currentScores.find((s: TaskScore) => s.taskId === task.id)?.score || 0;
+        const currentScore =
+          currentScores.find((s: TaskScore) => s.taskId === task.id)?.score ||
+          0;
         updateTaskScore(task.id, currentScore + 1);
       }
     });
@@ -53,8 +62,6 @@ const QuestionScreen: React.FC = () => {
     }
   };
 
-
-
   const handleReset = () => {
     Alert.alert(
       'Start Fresh',
@@ -65,7 +72,7 @@ const QuestionScreen: React.FC = () => {
           text: 'Begin Again',
           style: 'destructive',
           onPress: () => {
-            resetScores();
+            resetJourney();
             setCurrentQuestionIndex(0);
           },
         },
@@ -101,13 +108,20 @@ const QuestionScreen: React.FC = () => {
           <View
             style={[
               styles.progressFill,
-              { width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` },
+              {
+                width: `${
+                  ((currentQuestionIndex + 1) / questions.length) * 100
+                }%`,
+              },
             ]}
           />
         </View>
       </View>
 
-      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        style={styles.content}
+        contentContainerStyle={styles.contentContainer}
+      >
         <View style={styles.questionContainer}>
           <Text style={styles.questionText}>{currentQuestion.text}</Text>
         </View>
@@ -269,4 +283,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuestionScreen; 
+export default QuestionScreen;
